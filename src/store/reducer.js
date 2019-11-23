@@ -16,7 +16,12 @@ import {
 } from "ramda";
 import { ActionType } from "./types";
 
-export const INIT_STATE = {};
+export const INIT_STATE = {
+  testRatingList: {
+    items: [],
+    isGreaterDict: {}
+  }
+};
 
 const HANDLERS = {
   [ActionType.AddItem]: curry(({ item, index, ratingListId }, state) =>

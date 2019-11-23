@@ -1,0 +1,10 @@
+.edition-state-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.rating-list-selector {
+  width: 20rem;
+}
