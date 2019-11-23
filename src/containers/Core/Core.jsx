@@ -1,13 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "hooks";
-import { addItem } from "store";
-
+import { Typography } from "antd";
+import "./Core.css";
 export const Core = () => {
-  const itemsLength = useSelector(state => JSON.stringify(state));
-  const dispatch = useDispatch();
   return (
-    <button type="button" onClick={() => dispatch(addItem("Andrew"))}>
-      Core Container: {itemsLength}
-    </button>
+    <div class="core-container">
+      <Typography.Title level={1}>Crating</Typography.Title>
+    </div>
   );
 };
