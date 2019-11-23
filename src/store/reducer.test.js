@@ -1,79 +1,268 @@
 import { reducer } from "./reducer";
-import { addItem, addComparison, setRatingId } from "./actions";
+import {
+  addItem,
+  addComparison,
+  createRatingList,
+  removeItem,
+  removeRatingList,
+  removeComparison
+} from "./actions";
 
 describe("Store", () => {
-  const initState = {
-    items: [1, 2, 3],
-    isGreaterDict: {},
-    ratingId: null
-  };
-  test("Add Item at the beginning", () => {
-    expect(reducer(initState, addItem(0, 0))).toEqual({
-      ...initState,
-      items: [0, 1, 2, 3]
-    });
-  });
-  test("Add Item at the end", () => {
-    expect(reducer(initState, addItem(0))).toEqual({
-      ...initState,
-      items: [1, 2, 3, 0]
-    });
-  });
-  test("Add Item at the end", () => {
-    expect(reducer(initState, addItem(0, 1))).toEqual({
-      ...initState,
-      items: [1, 0, 2, 3]
+  test("Create Rating List", () => {
+    const initialState = {};
+    const actions = [createRatingList("testRatingList")];
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
+    expect(nextState).toEqual({
+      testRatingList: {
+        items: [],
+        ratingListId: "testRatingList",
+        isGreaterDict: {}
+      }
     });
   });
 
-  test("Add comparison", () => {
-    const action = addComparison("a", "b");
-    const nextState = reducer(initState, action);
+  test("Add Rating List Item", () => {
+    const initialState = {};
+    const actions = [
+      createRatingList("testRatingList"),
+      addItem("testRatingList", "a"),
+      addItem("testRatingList", "b"),
+      addItem("testRatingList", "c"),
+      addItem("testRatingList", "d", 0)
+    ];
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
     expect(nextState).toEqual({
-      ...initState,
-      isGreaterDict: {
-        a: {
-          b: true
-        },
-        b: {
-          a: false
+      testRatingList: {
+        items: ["d", "a", "b", "c"],
+        ratingListId: "testRatingList",
+        isGreaterDict: {}
+      }
+    });
+  });
+
+  test("Add Comparison", () => {
+    const initialState = {};
+    const actions = [
+      createRatingList("testRatingList"),
+      addItem("testRatingList", "a"),
+      addItem("testRatingList", "b"),
+      addItem("testRatingList", "c"),
+      addItem("testRatingList", "d", 0),
+      addComparison("testRatingList", "a", "b")
+    ];
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
+    expect(nextState).toEqual({
+      testRatingList: {
+        items: ["d", "a", "b", "c"],
+        ratingListId: "testRatingList",
+        isGreaterDict: {
+          a: {
+            b: true
+          },
+          b: {
+            a: false
+          }
+        }
+      }
+    });
+  });
+  test("Add Comparison overrides previous", () => {
+    const initialState = {};
+    const actions = [
+      createRatingList("testRatingList"),
+      addItem("testRatingList", "a"),
+      addItem("testRatingList", "b"),
+      addItem("testRatingList", "c"),
+      addItem("testRatingList", "d", 0),
+      addComparison("testRatingList", "a", "b"),
+      addComparison("testRatingList", "b", "a")
+    ];
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
+    expect(nextState).toEqual({
+      testRatingList: {
+        items: ["d", "a", "b", "c"],
+        ratingListId: "testRatingList",
+        isGreaterDict: {
+          a: {
+            b: false
+          },
+          b: {
+            a: true
+          }
+        }
+      }
+    });
+  });
+  test("Remove comparison", () => {
+    const initialState = {};
+    const actions = [
+      createRatingList("testRatingList"),
+      addItem("testRatingList", "a"),
+      addItem("testRatingList", "b"),
+      addItem("testRatingList", "c"),
+      addItem("testRatingList", "d", 0),
+      addComparison("testRatingList", "a", "b"),
+      removeComparison("testRatingList", "a")
+    ];
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
+    expect(nextState).toEqual({
+      testRatingList: {
+        items: ["d", "a", "b", "c"],
+        ratingListId: "testRatingList",
+        isGreaterDict: {
+          b: {}
         }
       }
     });
   });
 
-  test("Add comparison overrides previous comparisons", () => {
-    const initState = {
-      isGreaterDict: {
-        a: {
-          b: true
-        },
-        b: {
-          a: false
-        }
-      }
-    };
-    const action = addComparison("b", "a");
-    const nextState = reducer(initState, action);
+  test("Remove comparison", () => {
+    const initialState = {};
+    const actions = [
+      createRatingList("testRatingList"),
+      addItem("testRatingList", "a"),
+      addItem("testRatingList", "b"),
+      addItem("testRatingList", "c"),
+      addItem("testRatingList", "d", 0),
+      addComparison("testRatingList", "a", "b"),
+      removeComparison("testRatingList", "a", "b")
+    ];
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
     expect(nextState).toEqual({
-      ...initState,
-      isGreaterDict: {
-        a: {
-          b: false
-        },
-        b: {
-          a: true
+      testRatingList: {
+        items: ["d", "a", "b", "c"],
+        ratingListId: "testRatingList",
+        isGreaterDict: {
+          a: {},
+          b: {}
         }
       }
     });
   });
 
-  test("Set Rating Id", () => {
-    const action = setRatingId("AndrewRating");
-    const nextState = reducer(initState, action);
+  test("Remove Item", () => {
+    const initialState = {};
+    const actions = [
+      createRatingList("testRatingList"),
+      addItem("testRatingList", "a"),
+      addItem("testRatingList", "b"),
+      addItem("testRatingList", "c"),
+      addItem("testRatingList", "d", 0),
+      addComparison("testRatingList", "a", "b"),
+      addComparison("testRatingList", "b", "a"),
+      removeItem("testRatingList", "a")
+    ];
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
     expect(nextState).toEqual({
-      ...initState,
-      ratingId: "AndrewRating"
+      testRatingList: {
+        items: ["d", "b", "c"],
+        ratingListId: "testRatingList",
+        isGreaterDict: {
+          a: {
+            b: false
+          },
+          b: {
+            a: true
+          }
+        }
+      }
     });
+  });
+  test("Remove Item with comparisons", () => {
+    const initialState = {};
+    const actions = [
+      createRatingList("testRatingList"),
+      addItem("testRatingList", "a"),
+      addItem("testRatingList", "b"),
+      addItem("testRatingList", "c"),
+      addItem("testRatingList", "d", 0),
+      addComparison("testRatingList", "a", "b"),
+      addComparison("testRatingList", "b", "a"),
+      removeItem("testRatingList", "a", true)
+    ];
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
+    expect(nextState).toEqual({
+      testRatingList: {
+        items: ["d", "b", "c"],
+        ratingListId: "testRatingList",
+        isGreaterDict: {
+          b: {}
+        }
+      }
+    });
+  });
+  test("Remove all items", () => {
+    const initialState = {};
+    const actions = [
+      createRatingList("testRatingList"),
+      addItem("testRatingList", "a"),
+      addItem("testRatingList", "b"),
+      addItem("testRatingList", "c"),
+      addItem("testRatingList", "d", 0),
+      addComparison("testRatingList", "a", "b"),
+      addComparison("testRatingList", "b", "a"),
+      removeItem("testRatingList", "a", true),
+      removeItem("testRatingList", "b", true)
+    ];
+
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
+
+    expect(nextState).toEqual({
+      testRatingList: {
+        items: ["d", "c"],
+        ratingListId: "testRatingList",
+        isGreaterDict: {}
+      }
+    });
+  });
+  test("Remove rating list", () => {
+    const initialState = {};
+    const actions = [
+      createRatingList("testRatingList"),
+      addItem("testRatingList", "a"),
+      addItem("testRatingList", "b"),
+      addItem("testRatingList", "c"),
+      addItem("testRatingList", "d", 0),
+      addComparison("testRatingList", "a", "b"),
+      addComparison("testRatingList", "b", "a"),
+      removeItem("testRatingList", "a", true),
+      removeItem("testRatingList", "b", true),
+      removeRatingList("testRatingList")
+    ];
+
+    const nextState = actions.reduce(
+      (state, action) => reducer(state, action),
+      initialState
+    );
+
+    expect(nextState).toEqual({});
   });
 });

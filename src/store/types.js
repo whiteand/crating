@@ -1,5 +1,8 @@
 export const ActionType = {
   AddItem: "AddItem",
   AddComparison: "AddComparison",
-  SetRatingId: "SetRatingId"
+  CreateRatingList: "CreateRatingList",
+  RemoveItem: "RemoveItem",
+  RemoveRatingList: "RemoveRatingList",
+  RemoveComparison: "RemoveComparison"
 };
