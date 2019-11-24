@@ -1,21 +1,22 @@
 import React from "react";
 import { INIT_STATE, reducer } from "./reducer";
 import { setState } from "store/actions";
+import { storage } from "objects";
+import { fromStorage } from "./storageProvider";
 import { Context } from "./Context";
 
 export const Provider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, INIT_STATE);
   React.useEffect(() => {
-    const fromLocalStorage = localStorage.getItem("state");
+    const valueFromStorage = storage.getItem("s");
 
-    if (!fromLocalStorage) return;
+    if (!valueFromStorage) return;
 
     try {
-      const state = JSON.parse(fromLocalStorage);
-
+      const state = fromStorage(valueFromStorage);
       dispatch(setState(state));
     } catch (error) {
-      console.log("Invalid json: " + fromLocalStorage);
+      console.log("Invalid json: " + valueFromStorage);
     }
   }, [dispatch]);
   return (

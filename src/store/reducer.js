@@ -18,6 +18,8 @@ import {
   pathOr,
   pipe
 } from "ramda";
+import { storage } from "objects";
+import { toStorageValue } from "./storageProvider";
 import { ActionType } from "./types";
 
 export const INIT_STATE = {};
@@ -86,7 +88,7 @@ export const reducer = (state, action) => {
 
   const newState = handler(action)(state);
 
-  localStorage.setItem("state", JSON.stringify(newState));
+  storage.setItem("s", toStorageValue(newState));
 
   return newState;
 };
