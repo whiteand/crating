@@ -75,5 +75,9 @@ export const reducer = (state, action) => {
 
   if (!handler) return state;
 
-  return handler(action)(state);
+  const newState = handler(action)(state);
+
+  localStorage.setItem("state", newState);
+
+  return newState;
 };
