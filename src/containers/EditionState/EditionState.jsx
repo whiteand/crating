@@ -38,8 +38,10 @@ export const EditionState = () => {
   const dispatch = useDispatch();
 
   const handleRemoveRating = React.useCallback(() => {
-    dispatch(removeRatingList(currentRatingListId));
-  }, [dispatch, currentRatingListId]);
+    const ratingListId = currentRatingListId;
+    dispatch(removeRatingList(ratingListId));
+    setCurrentRatingListId(ratingListsIds.filter(id => id !== ratingListId)[0]);
+  }, [dispatch, currentRatingListId, setCurrentRatingListId, ratingListsIds]);
 
   const comparisonsToMake = useSelector(
     getComparisonsToMake(currentRatingListId)
