@@ -1,4 +1,5 @@
 import {
+  always,
   assoc,
   assocPath,
   complement,
@@ -7,9 +8,11 @@ import {
   dissocPath,
   equals,
   filter,
+  identity,
+  ifElse,
+  includes,
   insert,
   lensPath,
-  always,
   map,
   over,
   pathOr,
@@ -23,11 +26,15 @@ const HANDLERS = {
   [ActionType.AddItem]: curry(({ item, index, ratingListId }, state) =>
     over(
       lensPath([ratingListId, "items"]),
-      insert(
-        index === undefined
-          ? pathOr(0, [ratingListId, "items", "length"], state)
-          : index,
-        item
+      ifElse(
+        includes(item),
+        identity,
+        insert(
+          index === undefined
+            ? pathOr(0, [ratingListId, "items", "length"], state)
+            : index,
+          item
+        )
       ),
       state
     )
