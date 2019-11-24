@@ -1,0 +1,21 @@
+.item-input-container {
+  margin-top: 1rem;
+}
+
+.input-with-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 20rem;
+}
+
+.input-with-button input {
+  flex-grow: 1;
+}
+
+.input-with-button .add-button {
+  background-color: #0ea !important;
+  color: white;
+  margin-left: 0.5rem;
+}

@@ -1,16 +1,13 @@
 .empty-state-container {
   display: flex;
-  height: 50vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.empty-state-container .create-rating-title {
-}
-
 .empty-state-container .rating-name-input {
   margin: 1rem 0;
+  width: 20rem;
 }
 
 .empty-state-container .add-button {

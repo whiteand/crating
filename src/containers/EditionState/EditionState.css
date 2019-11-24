@@ -5,6 +5,27 @@
   flex-direction: column;
 }
 
-.rating-list-selector {
+.rating-list-selector-and-delete-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   width: 20rem;
+}
+
+.rating-list-selector {
+  flex-grow: 1;
+}
+
+.remove-rating-button {
+  margin-left: 0.5rem;
+  background-color: crimson !important;
+  color: white !important;
+}
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
 }
