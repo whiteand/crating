@@ -26,6 +26,48 @@
 .items {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 90vw;
   padding: 1rem;
+}
+
+.remove-item-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.remove-item-buttons .remove-item-button {
+  margin-left: 0.5rem;
+  background-color: crimson !important;
+  color: white;
+}
+
+.remove-item-buttons .remove-item-with-comparisons {
+  background-color: #a00 !important;
+}
+.item-overlay {
+  background-color: #333;
+  color: white;
+}
+
+.comparisons-list {
+}
+
+.comparison {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comparison-statement {
+}
+
+.table-wrapper {
+  margin: 0 1rem;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 0.5rem #333;
+  flex-grow: 1;
+}
+
+.comparison-input-wrapper {
+  height: 10rem;
 }

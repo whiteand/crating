@@ -9,7 +9,8 @@ const sortAndCollectUndefinedComparisons = (items, isGreaterDict) => {
       undefinedComparisons.push([a, b]);
       return 0;
     }
-    return isAGreaterB ? 1 : -1;
+
+    return isAGreaterB ? -1 : 1;
   }, items);
 
   return undefinedComparisons;

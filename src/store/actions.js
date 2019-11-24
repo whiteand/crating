@@ -37,3 +37,8 @@ export const removeComparison = (ratingListId, item1, item2) => ({
   item1,
   item2
 });
+
+export const setState = newState => ({
+  type: ActionType.SetState,
+  state: newState
+});

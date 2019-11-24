@@ -4,5 +4,6 @@ export const ActionType = {
   CreateRatingList: "CreateRatingList",
   RemoveItem: "RemoveItem",
   RemoveRatingList: "RemoveRatingList",
-  RemoveComparison: "RemoveComparison"
+  RemoveComparison: "RemoveComparison",
+  SetState: "SetState"
 };

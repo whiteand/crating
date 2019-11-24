@@ -9,6 +9,7 @@ import {
   filter,
   insert,
   lensPath,
+  always,
   map,
   over,
   pathOr,
@@ -65,7 +66,8 @@ const HANDLERS = {
       item2 === undefined
         ? pipe(dissoc(item1), map(dissoc(item1)))
         : pipe(dissocPath([item1, item2]), dissocPath([item2, item1]))
-    )
+    ),
+  [ActionType.SetState]: ({ state }) => always(state)
 };
 
 export const reducer = (state, action) => {
@@ -77,7 +79,7 @@ export const reducer = (state, action) => {
 
   const newState = handler(action)(state);
 
-  localStorage.setItem("state", newState);
+  localStorage.setItem("state", JSON.stringify(newState));
 
   return newState;
 };
