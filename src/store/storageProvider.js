@@ -1,5 +1,31 @@
 import { map, pipe, toPairs, assocPath, fromPairs } from "ramda";
 
+const CODES = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split(
+  ""
+);
+
+const decodeNumbers = waycode => {
+  const way = waycode[0];
+  const code = waycode.slice(1);
+  if (way === "s") {
+    return code.split("_").map(numberString => Number.parseInt(numberString));
+  }
+  if (way === "c") {
+    return code.split("").map(char => CODES.indexOf(char));
+  }
+  return JSON.parse(waycode);
+};
+
+const encodeNumbers = (way, numbers) => {
+  if (way === "s") {
+    return "s" + numbers.map(e => e.toString()).join("_");
+  }
+  if (way === "c") {
+    return "c" + numbers.map(number => CODES[number]).join("");
+  }
+  return JSON.stringify(numbers);
+};
+
 const getSmallState = pipe(
   map(rating => {
     if (!rating) return undefined;
@@ -18,7 +44,12 @@ const getSmallState = pipe(
         }
       }
     }
-    return { i: items, c: comparisons };
+
+    const encodeWay = items.length > 62 ? 's' : 'c'
+
+
+
+    return { i: items, c: encodeNumbers(encodeWay, comparisons)};
   })
 );
 
@@ -30,8 +61,10 @@ export const toStorageValue = state => {
 
 const getLargeState = pipe(
   toPairs,
-  map(([ratingListId, { i: items, c }]) => {
+  map(([ratingListId, { i: items, c: code }]) => {
     let isGreaterDict = {};
+
+    const c = decodeNumbers(code)
 
     for (let i = 0; i < c.length; i += 2) {
       const greaterIndex = c[i];

@@ -71,27 +71,36 @@ export const EditionState = () => {
 
   return (
     <div className="edition-state-container">
-      <CreateRatingListContainer title="1. Add another rating list" />
-      <Typography.Title level={2}>2. Select your rating list</Typography.Title>
-      <div className="rating-list-selector-and-delete-button">
-        <Select
-          className="rating-list-selector"
-          value={currentRatingListId}
-          options={ratingListsIds}
-          onChange={setCurrentRatingListId}
-          getPopupContainer={() => document.querySelector(".app")}
-        >
-          {ratingListsIds.map(id => (
-            <Select.Option value={id} key={id}>
-              {id}
-            </Select.Option>
-          ))}
-        </Select>
-        <Button className="remove-rating-button" onClick={handleRemoveRating}>
-          Delete
-        </Button>
-      </div>
-      {currentRatingListId && <ItemInput ratingListId={currentRatingListId} />}
+      <CreateRatingListContainer title="1. Создать другой рейтинг" />
+      {ratingListsIds.length > 1 && (
+        <div>
+          <Typography.Title level={3}>
+            Выберите рейтинговый список
+          </Typography.Title>
+          <div className="rating-list-selector-and-delete-button">
+            <Select
+              className="rating-list-selector"
+              value={currentRatingListId}
+              options={ratingListsIds}
+              onChange={setCurrentRatingListId}
+              getPopupContainer={() => document.querySelector(".app")}
+            >
+              {ratingListsIds.map(id => (
+                <Select.Option value={id} key={id}>
+                  {id}
+                </Select.Option>
+              ))}
+            </Select>
+            <Button
+              className="remove-rating-button"
+              onClick={handleRemoveRating}
+            >
+              Удалить
+            </Button>
+          </div>
+        </div>
+      )}
+      {currentRatingListId && <ItemInput ratingListId={currentRatingListId} title="Добавьте елемент в рейтинг:"/>}
       <div className="comparison-input-wrapper">
         {comparisonsToMake.length > 0 && (
           <ComparisonInput
@@ -153,7 +162,7 @@ export const EditionState = () => {
                 }
               },
               {
-                title: "Actions",
+                title: "Действия",
                 dataIndex: "item",
                 key: "remove",
                 render(item, row) {
@@ -161,15 +170,9 @@ export const EditionState = () => {
                     <div key={item} className="remove-item-buttons">
                       <Button
                         className="remove-item-button"
-                        onClick={() => handleRemoveItem(item, false)}
-                      >
-                        Remove
-                      </Button>
-                      <Button
-                        className="remove-item-button remove-item-with-comparisons"
                         onClick={() => handleRemoveItem(item, true)}
                       >
-                        Remove All
+                        Х
                       </Button>
                     </div>
                   );
@@ -186,7 +189,7 @@ export const EditionState = () => {
             pagination={false}
             columns={[
               {
-                title: "Your Rating",
+                title: "Созданный рейтинг",
                 key: "index",
                 render(_, _row, index) {
                   return <div key={index}>{index + 1}</div>;
