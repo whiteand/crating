@@ -5,7 +5,7 @@ import { createRatingList } from "store/actions";
 import "./CreateRatingListContainer.css";
 
 export const CreateRatingListContainer = ({
-  title = "1. Create your first rating"
+  title = "1. Создайте свой первый рейтинговый список"
 }) => {
   const dispatch = useDispatch();
 
@@ -25,18 +25,18 @@ export const CreateRatingListContainer = ({
 
   return (
     <div className="empty-state-container">
-      <Typography.Title className="create-rating-title" level={2}>
+      <Typography.Title className="create-rating-title" level={3}>
         {title}
       </Typography.Title>
       <Input
         className="rating-name-input"
         value={ratingListId}
         onChange={handleOnChange}
-        placeholder="Rating List Name"
+        placeholder="Название рейтинга"
         onPressEnter={handleAdd}
       />
       <Button className="add-button" onClick={handleAdd}>
-        Add
+        Добавить
       </Button>
     </div>
   );
