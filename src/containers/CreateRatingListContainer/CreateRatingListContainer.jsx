@@ -5,7 +5,7 @@ import { createRatingList } from "store/actions";
 import "./CreateRatingListContainer.css";
 
 export const CreateRatingListContainer = ({
-  title = "1. Создайте свой первый рейтинговый список"
+  title = "Создайте свой первый рейтинговый список"
 }) => {
   const dispatch = useDispatch();
 

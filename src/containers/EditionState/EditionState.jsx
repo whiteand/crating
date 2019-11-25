@@ -75,7 +75,7 @@ export const EditionState = () => {
       {ratingListsIds.length > 1 && (
         <div>
           <Typography.Title level={3}>
-            2. Выберите рейтинговый список
+            Выберите рейтинговый список
           </Typography.Title>
           <div className="rating-list-selector-and-delete-button">
             <Select
@@ -100,7 +100,7 @@ export const EditionState = () => {
           </div>
         </div>
       )}
-      {currentRatingListId && <ItemInput ratingListId={currentRatingListId} title={`${ratingListsIds.length > 1 ? 3 : 2}. Добавьте елемент в рейтинг:`}/>}
+      {currentRatingListId && <ItemInput ratingListId={currentRatingListId} title="Добавьте елемент в рейтинг:"/>}
       <div className="comparison-input-wrapper">
         {comparisonsToMake.length > 0 && (
           <ComparisonInput
