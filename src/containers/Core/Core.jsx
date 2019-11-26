@@ -2,7 +2,7 @@ import React from "react";
 import { keys } from "ramda";
 import { Typography } from "antd";
 import { useSelector } from "hooks";
-import { CreateRatingListContainer, EditionState } from "containers";
+import { CreateRatingListContainer, EditionState, Import } from "containers";
 import "./Core.css";
 
 export const Core = () => {
@@ -15,6 +15,7 @@ export const Core = () => {
       ) : (
         <EditionState key="1" />
       )}
+      <Import/>
     </div>
   );
 };

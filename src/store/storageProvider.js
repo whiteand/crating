@@ -1,4 +1,5 @@
 import { map, pipe, toPairs, assocPath, fromPairs } from "ramda";
+import { obj as v } from 'quartet'
 
 const CODES = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split(
   ""
@@ -8,10 +9,22 @@ const decodeNumbers = waycode => {
   const way = waycode[0];
   const code = waycode.slice(1);
   if (way === "s") {
-    return code.split("_").map(numberString => Number.parseInt(numberString));
+    return code.split("_").map(numberString => {
+      const number = Number.parseInt(numberString)
+      if (Number.isNaN(number)) {
+        throw new Error('wrong number: ' + JSON.stringify(numberString))
+      }
+      return number
+    });
   }
   if (way === "c") {
-    return code.split("").map(char => CODES.indexOf(char));
+    return code.split("").map(char => {
+      const index = CODES.indexOf(char)
+      if (index < 0) {
+        throw new Error('wrong code: ' + char)
+      }
+      return index
+    });
   }
   return JSON.parse(waycode);
 };
@@ -87,7 +100,23 @@ const getLargeState = pipe(
   fromPairs
 );
 
+const checkSmallState = v(
+  {
+    [v.rest]: {
+      i: v.arrayOf(v.string),
+      c: v.and(v.string, c => v.arrayOf(v.safeInteger)(decodeNumbers(c)))
+    }
+  },
+)
+
 export const fromStorage = code => {
   const smallState = JSON.parse(code);
+  const explanations = []
+
+  if (!checkSmallState(smallState, explanations)) {
+    console.log(explanations)
+    throw Object.assign(new Error('Wrong format'), { explanations })
+  }
+
   return getLargeState(smallState);
 };

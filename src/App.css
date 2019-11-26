@@ -446,9 +446,12 @@ textarea {
   padding: 0.2em 0;
 }
 
-.app,
-.app * {
+.app {
   box-sizing: border-box;
   font-size: 10px;
   font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.app * {
+  font-size: 1.4rem;
 }

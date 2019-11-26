@@ -4,7 +4,8 @@ import { Select, Typography, Button, Table, Popover } from "antd";
 import {
   CreateRatingListContainer,
   ItemInput,
-  ComparisonInput
+  ComparisonInput,
+  Export
 } from "containers";
 import { useSelector, useDispatch } from "hooks";
 import {
@@ -71,8 +72,8 @@ export const EditionState = () => {
 
   return (
     <div className="edition-state-container">
-      <CreateRatingListContainer title="1. Создать другой рейтинг" />
-      {ratingListsIds.length > 1 && (
+      <CreateRatingListContainer title="Создать другой рейтинг" />
+      {ratingListsIds.length > 1 ? (
         <div>
           <Typography.Title level={3}>
             Выберите рейтинговый список
@@ -99,8 +100,24 @@ export const EditionState = () => {
             </Button>
           </div>
         </div>
+      ) : (
+        <div>
+          <div className="rating-list-selector-and-delete-button">
+            <Button
+              className="remove-rating-button"
+              onClick={handleRemoveRating}
+            >
+              Удалить рейтинг
+            </Button>
+          </div>
+        </div>
       )}
-      {currentRatingListId && <ItemInput ratingListId={currentRatingListId} title="Добавьте елемент в рейтинг:"/>}
+      {currentRatingListId && (
+        <ItemInput
+          ratingListId={currentRatingListId}
+          title="Добавьте елемент в рейтинг:"
+        />
+      )}
       <div className="comparison-input-wrapper">
         {comparisonsToMake.length > 0 && (
           <ComparisonInput
@@ -208,6 +225,7 @@ export const EditionState = () => {
           />
         </div>
       </div>
+      <Export />
     </div>
   );
 };
