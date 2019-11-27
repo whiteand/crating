@@ -73,18 +73,13 @@
   color: white;
 }
 
-.comparisons-list {
-}
-
 .comparison {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.comparison-statement {
-}
-
 .comparison-input-wrapper {
-  height: 10rem;
+  height: auto;
+  min-height: 10rem;
 }

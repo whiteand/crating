@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Typography } from "antd";
-import "./ComparisonInput.css";
+import { Typography } from "antd";
+import "./ComparisonInput.scss";
 export const ComparisonInput = ({ comparisons, onComparison }) => {
   const [[a, b]] = comparisons;
   return (
@@ -9,12 +9,12 @@ export const ComparisonInput = ({ comparisons, onComparison }) => {
         Выберите лучшее(осталось {comparisons.length} сравнений)
       </Typography.Title>
       <div className="comparison-input">
-        <Button className="item-button" onClick={() => onComparison(a, b)}>
+        <button className="item-button" onClick={() => onComparison(a, b)}>
           {a}
-        </Button>
-        <Button className="item-button" onClick={() => onComparison(b, a)}>
+        </button>
+        <button className="item-button" onClick={() => onComparison(b, a)}>
           {b}
-        </Button>
+        </button>
       </div>
     </div>
   );

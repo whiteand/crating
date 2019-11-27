@@ -147,6 +147,7 @@ export const EditionState = () => {
                       key={item}
                       title={item}
                       getPopupContainer={() => document.querySelector(".app")}
+                      trigger="click"
                       content={
                         <div className="comparisons-list">
                           {getComparisons(item).map(([greater, less]) => {

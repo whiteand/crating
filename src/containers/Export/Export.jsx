@@ -23,7 +23,7 @@ export const Export = () => {
           );
         }}
       >
-        <Button>Експорт</Button>
+        <Button>Экспорт</Button>
       </Clipboard>
     </div>
   );

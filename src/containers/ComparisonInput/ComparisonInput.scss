@@ -17,12 +17,24 @@
 
 .comparison-input .item-button {
   transition: background-color 0.3s;
+  border: none;
+  border-radius: 5px;
+  min-width: 30vw;
+  min-height: 4rem;
   flex-grow: 1;
 }
+
 .comparison-input .item-button:not(:last-child) {
   margin-right: 0.5rem;
 }
+
 .comparison-input .item-button:hover {
   background-color: #0ea !important;
   color: white !important;
+}
+
+.comparison-input-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
