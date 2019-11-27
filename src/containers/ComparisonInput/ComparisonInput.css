@@ -1,7 +1,18 @@
 .comparison-input {
   width: 20rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 720px) {
+  .comparison-input {
+    flex-direction: column;
+  }
+
+  .comparison-input .item-button:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
 }
 
 .comparison-input .item-button {
