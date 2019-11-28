@@ -101,7 +101,7 @@ export const Charts = () => {
               </div>
             </div>
           </div>
-          {data.length > 0 && (
+          {data.length > 1 && (
             <div className="chart-wrapper">
               <ScatterChart width={720} height={720}>
                 <CartesianGrid />
@@ -110,7 +110,7 @@ export const Charts = () => {
                   type="number"
                   name={xListId}
                   label={xListId}
-                  tickCount={2}
+                  tick={false}
                   unit="%"
                   range={[-1, 100]}
                 />
@@ -118,7 +118,7 @@ export const Charts = () => {
                   dataKey="y"
                   type="number"
                   name={yListId}
-                  tickCount={2}
+                  tick={false}
                   label={{ value: yListId, angle: -90 }}
                   unit="%"
                   range={[-1, 100]}
