@@ -1,16 +1,60 @@
 import React from "react";
-import { keys } from "ramda";
+import { keys, uniq } from "ramda";
 import { Select, Typography } from "antd";
+import {
+  ScatterChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  Scatter
+} from "recharts";
 import { useSelector } from "hooks";
-import { getSortedRating } from 'selectors'
+import { getSortedRating } from "selectors";
 import "./Charts.scss";
+
+const getValue = (item, rating) => {
+  if (rating.length === 0) return -1;
+
+  const index = rating.indexOf(item);
+
+  if (index === -1) return -1;
+
+  if (rating.length === 1) return 50;
+
+  const percents = (100 * (rating.length - index - 1)) / rating.length;
+
+  return percents;
+};
 
 export const Charts = () => {
   const ratingListsIds = useSelector(keys);
   const [xListId, setXListId] = React.useState(ratingListsIds[0]);
   const [yListId, setYListId] = React.useState(ratingListsIds[0]);
+
+  React.useEffect(() => {
+    if (ratingListsIds.length === 0) return;
+    if (ratingListsIds.length === 1) {
+      setXListId(ratingListsIds[0]);
+      setYListId(ratingListsIds[0]);
+      return;
+    }
+    setXListId(ratingListsIds[0]);
+    setYListId(ratingListsIds[1]);
+  }, [ratingListsIds]);
+
   const xRating = useSelector(getSortedRating(xListId));
   const yRating = useSelector(getSortedRating(yListId));
+
+  const allValues = uniq([...xRating, ...yRating]);
+
+  const data = allValues.map(value => ({
+    x: getValue(value, xRating),
+    y: getValue(value, yRating),
+    item: value
+  }));
+
   return (
     <div className="charts-container">
       {ratingListsIds.length === 0 ? (
@@ -57,9 +101,65 @@ export const Charts = () => {
               </div>
             </div>
           </div>
-          <div className="chart-wrapper">
-            x: {JSON.stringify(xRating)}, y: {JSON.stringify(yRating)}
-          </div>
+          {data.length > 0 && (
+            <div className="chart-wrapper">
+              <ScatterChart width={720} height={720}>
+                <CartesianGrid />
+                <XAxis
+                  dataKey="x"
+                  type="number"
+                  name={xListId}
+                  label={xListId}
+                  tickCount={2}
+                  unit="%"
+                  range={[-1, 100]}
+                />
+                <YAxis
+                  dataKey="y"
+                  type="number"
+                  name={yListId}
+                  tickCount={2}
+                  label={{ value: yListId, angle: -90 }}
+                  unit="%"
+                  range={[-1, 100]}
+                />
+                <Tooltip
+                  content={({ payload: axes }) => {
+                    if (axes.length <= 0) return null;
+
+                    const { payload } = axes[0];
+
+                    return (
+                      <div className="tooltip">
+                        <div className="tooltip-pair">
+                          <div className="tooltip-label">Элемент</div>
+                          <div className="tooltip-value">{payload.item}</div>
+                        </div>
+                        <div className="tooltip-pair">
+                          <div className="tooltip-label">В "{xListId}"</div>
+                          <div className="tooltip-value">
+                            {xRating.indexOf(payload.item) + 1}
+                          </div>
+                        </div>
+                        <div className="tooltip-pair">
+                          <div className="tooltip-label">В "{yListId}"</div>
+                          <div className="tooltip-value">
+                            {yRating.indexOf(payload.item) + 1}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }}
+                />
+                <Legend />
+                <Scatter
+                  name={`${xListId} vs ${yListId}`}
+                  data={data}
+                  fill="#333"
+                />
+              </ScatterChart>
+            </div>
+          )}
         </div>
       )}
     </div>

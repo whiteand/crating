@@ -57,3 +57,24 @@
     }
   }
 }
+
+.tooltip {
+  background-color: #eaeaea;
+  border: 1px solid #aaa;
+  padding: 0.5rem;
+
+  .tooltip-pair {
+    margin-bottom: 1rem;
+    display: flex;
+    font-size: 1.1rem;
+
+    .tooltip-label {
+      font-weight: bold;
+      &:after {
+        content: ": ";
+      }
+    }
+    .tooltip-value {
+    }
+  }
+}
