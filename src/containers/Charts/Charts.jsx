@@ -23,7 +23,7 @@ const getValue = (item, rating) => {
 
   if (rating.length === 1) return 50;
 
-  const percents = (100 * (rating.length - index - 1)) / rating.length;
+  const percents = (100 * (rating.length - index - 1)) / (rating.length - 1);
 
   return percents;
 };
