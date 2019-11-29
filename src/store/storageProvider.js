@@ -8,6 +8,9 @@ const CODES = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".s
 const decodeNumbers = waycode => {
   const way = waycode[0];
   const code = waycode.slice(1);
+
+  if (!code) return []
+
   if (way === "s") {
     return code.split("_").map(numberString => {
       const number = Number.parseInt(numberString)
