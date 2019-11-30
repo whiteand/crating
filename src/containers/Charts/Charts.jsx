@@ -1,6 +1,6 @@
 import React from "react";
 import { keys, uniq } from "ramda";
-import { Select, Typography } from "antd";
+import { Select, Typography, Checkbox } from "antd";
 import {
   ScatterChart,
   CartesianGrid,
@@ -8,6 +8,7 @@ import {
   YAxis,
   Tooltip,
   Legend,
+  LabelList,
   Scatter
 } from "recharts";
 import { useSelector } from "hooks";
@@ -28,10 +29,18 @@ const getValue = (item, rating) => {
   return percents;
 };
 
+const getDotSize = (list1, list2) => {
+  // Math.max(xRating.length, yRating.length) > 0
+  //   ? 360 / Math.max(xRating.length, yRating.length)
+  //   : 2;
+  return 100;
+};
+
 export const Charts = () => {
   const ratingListsIds = useSelector(keys);
   const [xListId, setXListId] = React.useState(ratingListsIds[0]);
   const [yListId, setYListId] = React.useState(ratingListsIds[0]);
+  const [isLabelsShown, setIsLabelsShown] = React.useState(true);
 
   React.useEffect(() => {
     if (ratingListsIds.length === 0) return;
@@ -52,6 +61,7 @@ export const Charts = () => {
   const data = allValues.map(value => ({
     x: getValue(value, xRating),
     y: getValue(value, yRating),
+    z: getDotSize(xRating, yRating),
     item: value
   }));
 
@@ -103,7 +113,21 @@ export const Charts = () => {
           </div>
           {data.length > 1 && (
             <div className="chart-wrapper">
-              <ScatterChart width={720} height={720}>
+              <div className="labels-checkbox-wrapper">
+                <Checkbox
+                  checked={isLabelsShown}
+                  onChange={({ target: { checked } }) =>
+                    setIsLabelsShown(checked)
+                  }
+                >
+                  Показывать подписи
+                </Checkbox>
+              </div>
+              <ScatterChart
+                margin={{ top: 10, left: 10, right: 10, bottom: 10 }}
+                width={720}
+                height={720}
+              >
                 <CartesianGrid />
                 <XAxis
                   dataKey="x"
@@ -156,7 +180,9 @@ export const Charts = () => {
                   name={`${xListId} vs ${yListId}`}
                   data={data}
                   fill="#333"
-                />
+                >
+                  {isLabelsShown && <LabelList dataKey="item" />}
+                </Scatter>
               </ScatterChart>
             </div>
           )}
