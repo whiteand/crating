@@ -151,7 +151,7 @@ export const Charts = () => {
                     );
                   }}
                 />
-                <Legend />
+                <Legend margin={{ top: 10 }} />
                 <Scatter
                   name={`${xListId} vs ${yListId}`}
                   data={data}

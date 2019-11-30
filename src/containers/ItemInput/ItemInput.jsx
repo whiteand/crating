@@ -4,22 +4,32 @@ import { useDispatch } from "hooks";
 import { addItem } from "store/actions";
 import "./ItemInput.css";
 
+const tokenizeInput = itemsListString =>
+  itemsListString
+    .replace(/,,/g, "__@COMMA@__")
+    .split(",")
+    .map(word => word.trim().replace(/__@COMMA@__/g, ","))
+    .filter(Boolean);
+
 export const ItemInput = ({ ratingListId, title }) => {
-  const [item, setItem] = React.useState("");
-  
+  const [itemsString, setItem] = React.useState("");
+
   const dispatch = useDispatch();
 
   const handleAddItem = React.useCallback(() => {
-    dispatch(addItem(ratingListId, item));
+    const items = tokenizeInput(itemsString);
+    for (let i = 0; i < items.length; i++) {
+      dispatch(addItem(ratingListId, items[i]));
+    }
     setItem("");
-  }, [dispatch, item, setItem, ratingListId]);
+  }, [dispatch, itemsString, setItem, ratingListId]);
 
   return (
     <div className="item-input-container">
       <Typography.Title level={3}>{title}</Typography.Title>
       <div className="input-with-button">
         <Input
-          value={item}
+          value={itemsString}
           onChange={({ target: { value } }) => setItem(value)}
           onPressEnter={handleAddItem}
         />

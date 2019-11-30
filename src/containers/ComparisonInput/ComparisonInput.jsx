@@ -8,7 +8,7 @@ export const ComparisonInput = ({ comparisons, onComparison }) => {
       <Typography.Title level={3}>
         Выберите лучшее(осталось {comparisons.length} сравнений)
       </Typography.Title>
-      <div className="comparison-input">
+      <div className="comparison-input" key={`${a} vs. ${b}`}>
         <button className="item-button" onClick={() => onComparison(a, b)}>
           {a}
         </button>
