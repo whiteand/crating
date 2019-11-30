@@ -127,6 +127,7 @@ export const Charts = () => {
                 margin={{ top: 10, left: 10, right: 10, bottom: 10 }}
                 width={720}
                 height={720}
+                className={isLabelsShown ? "with-labels" : "without-labels"}
               >
                 <CartesianGrid />
                 <XAxis

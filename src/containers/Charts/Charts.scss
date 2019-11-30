@@ -81,5 +81,10 @@
 
 .with-small-labels .recharts-label > tspan {
   font-size: 10px !important;
-  color: rgba(0, 0, 0, 0.3) !important;
+  color: black !important;
+  fill: black !important;
+}
+
+.with-labels .recharts-layer .recharts-scatter-symbol > path {
+  fill: rgba(0, 0, 0, 0.1);
 }
