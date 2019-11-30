@@ -180,6 +180,7 @@ export const Charts = () => {
                   name={`${xListId} vs ${yListId}`}
                   data={data}
                   fill="#333"
+                  className="with-small-labels"
                 >
                   {isLabelsShown && <LabelList dataKey="item" />}
                 </Scatter>
