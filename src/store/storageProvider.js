@@ -1,5 +1,5 @@
 import { map, pipe, toPairs, assocPath, fromPairs } from "ramda";
-import { obj as v } from 'quartet'
+import { e as v } from 'quartet'
 
 const CODES = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split(
   ""
@@ -103,11 +103,12 @@ const getLargeState = pipe(
   fromPairs
 );
 
+const checkDecodedNumbers = v(v.arrayOf(v.safeInteger))
 const checkSmallState = v(
   {
     [v.rest]: {
       i: v.arrayOf(v.string),
-      c: v.and(v.string, c => v.arrayOf(v.safeInteger)(decodeNumbers(c)))
+      c: v.and(v.string, v.custom(pipe(decodeNumbers, checkDecodedNumbers)))
     }
   },
 )

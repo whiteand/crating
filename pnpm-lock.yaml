@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   antd: ^3.25.2
   enzyme: ^3.10.0
-  quartet: ^8.2.5
+  quartet: ^10.2.1
   ramda: ^0.26.1
   react: ^18.2.0
   react-clipboard.js: ^2.0.16
@@ -16,7 +16,7 @@ specifiers:
 dependencies:
   antd: 3.26.20_biqbaboplfbrettd7655fr4n2y
   enzyme: 3.11.0
-  quartet: 8.4.3
+  quartet: 10.2.1
   ramda: 0.26.1
   react: 18.2.0
   react-clipboard.js: 2.0.16_biqbaboplfbrettd7655fr4n2y
@@ -8446,8 +8446,8 @@ packages:
       side-channel: 1.0.4
     dev: false
 
-  /quartet/8.4.3:
-    resolution: {integrity: sha512-K+3lNYWIcTdA+NKONVCKiOdsg6P8zHDZ+zy1rtbMbQ0u8jZGkYkzBpry9BO8GBj8sxzTqVrwVFaYGlGanItieg==}
+  /quartet/10.2.1:
+    resolution: {integrity: sha512-Ir5IiVB4qQYwU/sASL1I1NhR8GQmEiIrRUyVBB9k8/xUOAgoEnebwF9QKef0ic1BJQeFNqkOtzyA2yhmbSTzGg==}
     dev: false
 
   /querystringify/2.2.0:
